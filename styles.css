@@ -1,0 +1,893 @@
+:root {
+  --red: #a80f16;
+  --red-dark: #7c090e;
+  --ink: #171717;
+  --muted: #686868;
+  --line: #d7d7d7;
+  --panel: #ffffff;
+  --soft: #f5f5f5;
+  --metal: #e8e8e1;
+  --shadow: 0 18px 46px rgba(17, 17, 17, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, rgba(168, 15, 22, 0.08), transparent 32rem),
+    linear-gradient(180deg, #fff, #f1f1ef);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+.file-button {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.72rem 0.92rem;
+}
+
+button:hover,
+.file-button:hover {
+  border-color: var(--red);
+}
+
+button.primary {
+  border-color: var(--red);
+  background: var(--red);
+  color: #fff;
+}
+
+button.ghost {
+  background: transparent;
+}
+
+button.danger {
+  color: var(--red-dark);
+}
+
+label {
+  display: grid;
+  gap: 0.42rem;
+  color: #333;
+  font-size: 0.83rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  padding: 0.78rem 0.86rem;
+  text-transform: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem clamp(1rem, 3vw, 2.2rem);
+  border-bottom: 4px solid var(--red);
+  background: #fff;
+}
+
+.site-header h1,
+.panel-heading h2,
+.presenter-topbar h2 {
+  margin: 0;
+  font-family: Impact, "Arial Black", sans-serif;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.site-header h1 {
+  color: var(--red);
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 0.95;
+}
+
+.eyebrow {
+  margin: 0 0 0.18rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.header-actions,
+.builder-actions,
+.data-actions,
+.presenter-actions,
+.inline-actions {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  gap: 1.1rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.workspace {
+  display: grid;
+  gap: 1rem;
+}
+
+.week-strip,
+.builder-panel,
+.preview-card,
+.week-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.week-strip {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.8fr) minmax(12rem, 1fr) minmax(9rem, 0.45fr) minmax(12rem, 1fr);
+  gap: 0.85rem;
+  padding: 1rem;
+}
+
+.builder-panel,
+.preview-card,
+.week-panel {
+  padding: 1rem;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(12rem, 0.42fr);
+  gap: 0.85rem;
+}
+
+.builder-panel {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.fallen-settings {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) auto;
+  gap: 0.85rem;
+  align-items: end;
+  padding: 0.85rem;
+  border: 1px solid #ead3d5;
+  border-radius: 8px;
+  background: #fff7f7;
+}
+
+.inline-actions label {
+  max-width: 10rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.pill,
+.count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  border-radius: 999px;
+  background: #f2dfdf;
+  color: var(--red-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 0.35rem 0.72rem;
+  text-transform: uppercase;
+}
+
+.count {
+  min-width: 2rem;
+}
+
+.week-panel {
+  align-self: start;
+  position: sticky;
+  top: 1rem;
+}
+
+.riddle-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.riddle-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.card-main {
+  display: grid;
+  gap: 0.22rem;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  padding: 0.85rem;
+  text-align: left;
+}
+
+.card-main strong {
+  font-size: 1rem;
+}
+
+.card-main small {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.card-kicker {
+  color: var(--red);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.card-actions button {
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  padding: 0.54rem 0.4rem;
+  font-size: 0.74rem;
+}
+
+.card-actions button:last-child {
+  border-right: 0;
+}
+
+.data-actions {
+  margin-top: 1rem;
+}
+
+.week-tabs {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.week-tabs button {
+  display: grid;
+  gap: 0.1rem;
+  width: 100%;
+  text-align: left;
+}
+
+.week-tabs button.active-week {
+  border-color: var(--red);
+  background: #fff6f6;
+}
+
+.week-tabs strong {
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+.week-tabs span,
+.week-tabs small {
+  color: var(--muted);
+}
+
+.file-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.file-button input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.riddle-stage {
+  min-height: 26rem;
+  border: 1px solid #cfcfca;
+  border-radius: 8px;
+  background: #fff;
+  padding: clamp(1rem, 3vw, 2.2rem);
+  overflow: hidden;
+}
+
+.preview-stage {
+  min-height: 22rem;
+}
+
+.riddle-scene {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.7rem);
+}
+
+.brand-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--red);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(1.15rem, 2vw, 2rem);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.riddle-clue {
+  max-width: 58rem;
+  color: var(--red);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(2.1rem, 5.8vw, 5.3rem);
+  line-height: 0.96;
+  text-transform: uppercase;
+  white-space: pre-line;
+}
+
+.preview-stage .riddle-clue {
+  font-size: clamp(1.7rem, 3.4vw, 3.3rem);
+}
+
+.answer-area {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.25em 0.5em;
+  max-width: 70rem;
+  min-height: 5.5rem;
+  color: #030303;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(2.5rem, 7.1vw, 7rem);
+  letter-spacing: 0.12em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.preview-stage .answer-area {
+  font-size: clamp(2rem, 4.4vw, 4.5rem);
+}
+
+.answer-word {
+  display: inline-flex;
+  gap: 0.08em;
+  white-space: nowrap;
+}
+
+.top-half-letter {
+  display: inline-block;
+  height: 0.46em;
+  overflow: hidden;
+}
+
+.top-half-letter span {
+  display: inline-block;
+}
+
+.revealed-answer {
+  color: #030303;
+}
+
+.fallen-puzzle {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 78rem;
+}
+
+.fallen-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38em 0.58em;
+  color: #030303;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(2.3rem, 6.4vw, 6.4rem);
+  letter-spacing: 0.14em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.preview-stage .fallen-line {
+  font-size: clamp(1.8rem, 4vw, 4.1rem);
+}
+
+.fallen-word {
+  white-space: nowrap;
+}
+
+.blank {
+  display: inline-block;
+  transform: translateY(-0.03em);
+}
+
+.letter-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  color: #030303;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(2rem, 5.4vw, 5.5rem);
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.preview-stage .letter-bank {
+  font-size: clamp(1.6rem, 3.5vw, 3.6rem);
+}
+
+.code-puzzle,
+.shift-puzzle,
+.remove-puzzle,
+.symbol-puzzle {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 78rem;
+}
+
+.code-line,
+.reference-line,
+.alphabet-line,
+.remove-bank {
+  color: #030303;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(2rem, 5.4vw, 5.4rem);
+  letter-spacing: 0.18em;
+  line-height: 1.12;
+  text-transform: uppercase;
+  white-space: pre-line;
+}
+
+.reference-line,
+.alphabet-line,
+.remove-bank {
+  color: var(--red);
+  font-size: clamp(1.1rem, 3vw, 2.8rem);
+  letter-spacing: 0.06em;
+}
+
+.answer-blanks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  color: #030303;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(1.7rem, 4.4vw, 4rem);
+  letter-spacing: 0.16em;
+}
+
+.shape-puzzle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  max-width: 78rem;
+}
+
+.shape-letter {
+  display: inline-grid;
+  place-items: center;
+  width: clamp(2.35rem, 5vw, 4.6rem);
+  height: clamp(2.35rem, 5vw, 4.6rem);
+  border: 4px solid #050505;
+  color: #050505;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(1.35rem, 3.6vw, 3.2rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.shape-letter.circle {
+  border-radius: 50%;
+}
+
+.shape-letter.triangle {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  padding-top: 0.45em;
+}
+
+.shape-letter.pentagon {
+  clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%);
+}
+
+.symbol-sentence {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  color: var(--red);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(2rem, 5vw, 4.9rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.symbol-word {
+  display: inline-flex;
+  gap: 0.18em;
+}
+
+.symbol-token {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.55em;
+  min-height: 1.55em;
+  border: 4px solid currentColor;
+  border-radius: 50%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.55em;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.symbol-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  color: #030303;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(1.2rem, 3vw, 2.6rem);
+  text-transform: uppercase;
+}
+
+.symbol-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.lookup-puzzle {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 68rem;
+}
+
+.lookup-puzzle p {
+  margin: 0;
+  color: var(--red);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(1.4rem, 3.5vw, 3.2rem);
+  text-transform: uppercase;
+}
+
+.lookup-puzzle div {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(8rem, 1fr));
+  gap: 0.6rem;
+}
+
+.lookup-puzzle span {
+  border: 4px solid #111;
+  border-radius: 8px;
+  color: #111;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(1.2rem, 2.8vw, 2.4rem);
+  padding: 0.7rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.hint-box {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: 9.4rem;
+  border: 5px solid #c6c6bd;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(168, 15, 22, 0.08), transparent 20%, transparent 80%, rgba(168, 15, 22, 0.08)),
+    #fff;
+  box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 7px var(--red);
+  padding: 1.25rem clamp(1rem, 3vw, 2rem);
+}
+
+.hint-box p {
+  max-width: 68rem;
+  margin: 0;
+  color: var(--red);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(1.35rem, 3vw, 3rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.preview-stage .hint-box p {
+  font-size: clamp(1.1rem, 2vw, 2rem);
+}
+
+.presenter {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
+  background: #fff;
+}
+
+.presenter-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 4px solid var(--red);
+  background: #fff;
+}
+
+.teacher-hint-strip {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: #fff8e6;
+}
+
+.teacher-hint-strip p {
+  margin: 0;
+  color: var(--red-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.teacher-hint-strip div {
+  color: #2b2b2b;
+  font-size: clamp(0.92rem, 1.5vw, 1.12rem);
+  font-weight: 800;
+  line-height: 1.25;
+  max-height: 3.75rem;
+  overflow-y: auto;
+}
+
+.presenter-stage {
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  overflow-y: auto;
+  padding: clamp(1rem, 3vw, 3rem);
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.presenter-stage .riddle-scene {
+  min-height: auto;
+  align-content: start;
+  padding-bottom: 1rem;
+}
+
+.presenter-stage .riddle-clue {
+  font-size: clamp(1.9rem, 5vw, 4.5rem);
+}
+
+.presenter-stage .answer-area,
+.presenter-stage .fallen-line {
+  font-size: clamp(2.25rem, 6vw, 5.8rem);
+}
+
+.presenter-stage .letter-bank {
+  font-size: clamp(1.9rem, 5vw, 4.8rem);
+}
+
+.presenter-stage .code-line {
+  font-size: clamp(1.8rem, 4.8vw, 4.8rem);
+}
+
+.presenter-stage .symbol-sentence {
+  font-size: clamp(1.8rem, 4.6vw, 4.5rem);
+}
+
+.presenter-stage .lookup-puzzle span {
+  font-size: clamp(1.1rem, 2.4vw, 2.1rem);
+}
+
+.presenter-stage .hint-box {
+  min-height: 7.5rem;
+}
+
+.presenter-stage .hint-box p {
+  font-size: clamp(1.1rem, 2.5vw, 2.35rem);
+}
+
+.live-solve-board {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 72rem;
+  border-left: 8px solid var(--red);
+  background: #f8f8f5;
+  padding: 0.9rem 1rem 1rem;
+}
+
+.board-label,
+.class-guess span {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.partial-answer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em 0.5em;
+  color: #030303;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(2rem, 5.2vw, 5.5rem);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.presenter-stage .partial-answer {
+  font-size: clamp(2rem, 5vw, 4.8rem);
+}
+
+.unsolved-letter {
+  color: #727272;
+}
+
+.class-guess {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+}
+
+.class-guess strong {
+  color: var(--red);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(1.3rem, 3vw, 2.5rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.solve-dock {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+
+.guess-label {
+  min-width: 0;
+}
+
+.guess-label input {
+  min-height: 3rem;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+}
+
+.solve-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.7rem;
+  background: #fff;
+}
+
+.progress-dots span {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+  background: #c9c9c9;
+}
+
+.progress-dots span.active {
+  background: var(--red);
+}
+
+@media (max-width: 960px) {
+  .app-shell,
+  .week-strip,
+  .form-grid,
+  .fallen-settings,
+  .lookup-puzzle div {
+    grid-template-columns: 1fr;
+  }
+
+  .week-panel {
+    position: static;
+  }
+
+  .site-header,
+  .presenter-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .solve-dock {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .site-header,
+  .builder-panel,
+  .week-panel,
+  .week-strip {
+    display: none;
+  }
+
+  .app-shell {
+    display: block;
+    padding: 0;
+  }
+
+  .preview-card {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .preview-card .panel-heading {
+    display: none;
+  }
+
+  .riddle-stage {
+    min-height: auto;
+    border: 0;
+  }
+}
