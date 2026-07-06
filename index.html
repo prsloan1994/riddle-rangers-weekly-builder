@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Riddle Rangers Weekly Builder</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Riddle Rangers</p>
+        <h1>Weekly Riddle Builder</h1>
+      </div>
+      <div class="header-actions">
+        <button id="presentWeekBtn" class="primary">Present Week</button>
+        <button id="printBtn">Print</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="workspace">
+        <div class="week-strip">
+          <label>
+            Program week
+            <select id="weekSelectInput"></select>
+          </label>
+          <label>
+            Week title
+            <input id="weekTitleInput" type="text" autocomplete="off">
+          </label>
+          <label>
+            Audience
+            <select id="audienceInput">
+              <option>Younger</option>
+              <option>Older</option>
+              <option>Mixed group</option>
+            </select>
+          </label>
+          <label>
+            Theme or verse
+            <input id="themeInput" type="text" autocomplete="off">
+          </label>
+        </div>
+
+        <section class="builder-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Make a riddle</p>
+              <h2 id="formTitle">New riddle</h2>
+            </div>
+            <button id="newRiddleBtn" class="ghost">Clear</button>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              Riddle title
+              <input id="riddleTitleInput" type="text" placeholder="11.1 Riddle 3" autocomplete="off">
+            </label>
+            <label>
+              Puzzle type
+              <select id="typeInput">
+                <option value="top-half">Top-half letters</option>
+                <option value="fallen-letters">Fallen letters</option>
+                <option value="backwards">Backwards words</option>
+                <option value="square-letters">Square letters</option>
+                <option value="symbol-key">Symbol key</option>
+                <option value="letter-shift">Next-letter code</option>
+                <option value="bible-lookup">Bible lookup</option>
+                <option value="remove-letters">Cross-out letters</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            Clue students see
+            <textarea id="clueInput" rows="4" spellcheck="true"></textarea>
+          </label>
+
+          <label>
+            Answer phrase
+            <input id="answerInput" type="text" autocomplete="off">
+          </label>
+
+          <div id="fallenSettings" class="fallen-settings hidden">
+            <label>
+              Missing letters
+              <input id="missingLettersInput" type="text" autocomplete="off">
+            </label>
+            <div class="inline-actions">
+              <label>
+                Number to remove
+                <input id="removeCountInput" type="number" min="1" max="14" value="6">
+              </label>
+              <button id="makeBlanksBtn" type="button">Make blanks</button>
+            </div>
+          </div>
+
+          <label>
+            Teacher hint
+            <textarea id="hintInput" rows="4" spellcheck="true"></textarea>
+          </label>
+
+          <div class="builder-actions">
+            <button id="saveRiddleBtn" class="primary">Save Riddle</button>
+            <button id="previewBtn">Preview</button>
+          </div>
+        </section>
+
+        <section class="preview-card" aria-live="polite">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Live preview</p>
+              <h2 id="previewTitle">Choose or make a riddle</h2>
+            </div>
+            <span id="previewType" class="pill">Top-half letters</span>
+          </div>
+          <div id="previewStage" class="riddle-stage preview-stage"></div>
+        </section>
+      </section>
+
+      <aside class="week-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">This week</p>
+            <h2 id="weekPanelTitle">Week 11.1</h2>
+          </div>
+          <span id="riddleCount" class="count">0</span>
+        </div>
+
+        <div id="riddleList" class="riddle-list"></div>
+
+        <div id="weekTabs" class="week-tabs"></div>
+
+        <div class="data-actions">
+          <button id="exportBtn">Export Program</button>
+          <label class="file-button">
+            Import Program
+            <input id="importInput" type="file" accept="application/json">
+          </label>
+          <button id="resetBtn" class="danger">Reset Program</button>
+        </div>
+      </aside>
+    </main>
+
+    <section id="presenter" class="presenter hidden" aria-hidden="true">
+      <div class="presenter-topbar">
+        <div>
+          <p id="presenterWeek" class="eyebrow">Week 11.1</p>
+          <h2 id="presenterTitle">Riddle</h2>
+        </div>
+        <div class="presenter-actions">
+          <button id="prevRiddleBtn">Previous</button>
+          <button id="nextStepBtn" class="primary">Next</button>
+          <button id="nextRiddleBtn">Next Riddle</button>
+          <button id="fullscreenBtn">Full Screen</button>
+          <button id="closePresenterBtn">Close</button>
+        </div>
+      </div>
+      <div class="teacher-hint-strip">
+        <p>Teacher hint</p>
+        <div id="teacherHintText"></div>
+      </div>
+      <div id="presenterStage" class="riddle-stage presenter-stage"></div>
+      <div class="solve-dock">
+        <label class="guess-label">
+          Class guess
+          <input id="liveGuessInput" type="text" autocomplete="off" placeholder="Type what the kids think it is">
+        </label>
+        <div class="solve-actions">
+          <button id="revealLetterBtn">Reveal Letter</button>
+          <button id="showHintBtn">Show Hint</button>
+          <button id="revealAnswerBtn" class="primary">Reveal Answer</button>
+          <button id="resetSolveBtn">Reset Solve</button>
+        </div>
+      </div>
+      <div class="progress-dots" id="progressDots"></div>
+    </section>
+
+    <template id="riddleCardTemplate">
+      <article class="riddle-card">
+        <button class="card-main" type="button">
+          <span class="card-kicker"></span>
+          <strong></strong>
+          <small></small>
+        </button>
+        <div class="card-actions">
+          <button class="present-one" title="Present this riddle">Present</button>
+          <button class="edit-one" title="Edit this riddle">Edit</button>
+          <button class="copy-one" title="Duplicate this riddle">Copy</button>
+          <button class="delete-one danger" title="Delete this riddle">Delete</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
