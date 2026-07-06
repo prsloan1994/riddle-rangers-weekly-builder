@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: riddle-rangers-weekly-builder
+    runtime: static
+    buildCommand: "true"
+    staticPublishPath: .
+    autoDeployTrigger: commit
