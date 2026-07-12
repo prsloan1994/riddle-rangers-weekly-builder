@@ -195,6 +195,7 @@ const els = {
   revealLetterBtn: document.querySelector("#revealLetterBtn"),
   showHintBtn: document.querySelector("#showHintBtn"),
   revealAnswerBtn: document.querySelector("#revealAnswerBtn"),
+  sendAnswerBtn: document.querySelector("#sendAnswerBtn"),
   resetSolveBtn: document.querySelector("#resetSolveBtn"),
   prevRiddleBtn: document.querySelector("#prevRiddleBtn"),
   nextStepBtn: document.querySelector("#nextStepBtn"),
@@ -504,6 +505,7 @@ function renderRiddleScene(riddle, step, solveState = null) {
   const showHint = step >= 2;
   const showAnswer = step >= 3;
   const showLiveSolve = Boolean(solveState && showPuzzle && !showAnswer);
+  const showSendPanel = Boolean(solveState && showAnswer);
 
   return `
     <div class="riddle-scene">
@@ -516,6 +518,7 @@ function renderRiddleScene(riddle, step, solveState = null) {
       ${showLiveSolve ? renderLiveSolveBoard(answer, solveState) : ""}
       ${showAnswer ? `<div class="answer-area revealed-answer">${renderAnswerWords(answer, false)}</div>` : ""}
       ${showHint ? `<div class="hint-box"><p>${hint}</p></div>` : ""}
+      ${showSendPanel ? renderSendPanel(answer, solveState) : ""}
     </div>
   `;
 }
@@ -744,6 +747,39 @@ function renderLiveSolveBoard(answer, solveState) {
   `;
 }
 
+function renderSendPanel(answer, solveState) {
+  const sendStatus = solveState.sendStatus || "ready";
+  const label = sendStatus === "sent"
+    ? "Delivered to Zach & Jada"
+    : sendStatus === "sending"
+      ? "Sending answer..."
+      : "Send answer to Zach & Jada";
+  const message = sendStatus === "sent"
+    ? "Message received. Nice work, Riddle Rangers."
+    : sendStatus === "sending"
+      ? "Opening the Riddle Rangers answer line..."
+      : "Tap when the class is ready to send the final answer.";
+  const disabled = sendStatus === "sending" || sendStatus === "sent" ? "disabled" : "";
+
+  return `
+    <div class="send-panel ${sendStatus}">
+      <div class="send-card">
+        <p class="send-kicker">Final step</p>
+        <h3>Send it to Zach & Jada</h3>
+        <p>${message}</p>
+        <div class="send-preview">
+          <span>Answer</span>
+          <strong>${escapeHtml(answer)}</strong>
+        </div>
+        <button id="sendAnswerStageBtn" class="big-send-button" type="button" ${disabled}>
+          <span class="send-icon" aria-hidden="true"></span>
+          ${label}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
 function renderPartialAnswer(answer, revealedCount) {
   let seenLetters = 0;
   return answer
@@ -820,6 +856,12 @@ function renderPresenter() {
   els.presenterStage.innerHTML = renderRiddleScene(riddle, activeStep, solveState);
   els.nextStepBtn.textContent = nextStepLabel();
   els.showHintBtn.textContent = activeStep >= 2 ? "Hint Shown" : "Show Hint to Class";
+  els.sendAnswerBtn.disabled = activeStep < 3 || solveState.sendStatus === "sending" || solveState.sendStatus === "sent";
+  els.sendAnswerBtn.textContent = solveState.sendStatus === "sent"
+    ? "Sent to Zach & Jada"
+    : solveState.sendStatus === "sending"
+      ? "Sending..."
+      : "Send to Zach & Jada";
   els.liveGuessInput.value = solveState.guess || "";
   els.progressDots.innerHTML = "";
 
@@ -832,7 +874,7 @@ function renderPresenter() {
 
 function getSolveState(riddle) {
   if (!solveStates[riddle.id]) {
-    solveStates[riddle.id] = { revealedCount: 0, guess: "" };
+    solveStates[riddle.id] = { revealedCount: 0, guess: "", sendStatus: "ready" };
   }
   return solveStates[riddle.id];
 }
@@ -873,13 +915,33 @@ function revealAnswer() {
   const riddle = week.riddles[activeRiddleIndex];
   const solveState = getSolveState(riddle);
   solveState.revealedCount = countAnswerCharacters(riddle.answer || "");
+  solveState.sendStatus = solveState.sendStatus || "ready";
   activeStep = 3;
   renderPresenter();
 }
 
+function sendAnswer() {
+  const riddle = week.riddles[activeRiddleIndex];
+  const solveState = getSolveState(riddle);
+  if (activeStep < 3 || solveState.sendStatus === "sending" || solveState.sendStatus === "sent") {
+    return;
+  }
+
+  solveState.sendStatus = "sending";
+  renderPresenter();
+
+  window.setTimeout(() => {
+    const latestState = getSolveState(riddle);
+    latestState.sendStatus = "sent";
+    if (week.riddles[activeRiddleIndex]?.id === riddle.id && activeStep >= 3) {
+      renderPresenter();
+    }
+  }, 1400);
+}
+
 function resetSolve() {
   const riddle = week.riddles[activeRiddleIndex];
-  solveStates[riddle.id] = { revealedCount: 0, guess: "" };
+  solveStates[riddle.id] = { revealedCount: 0, guess: "", sendStatus: "ready" };
   activeStep = 0;
   renderPresenter();
 }
@@ -993,6 +1055,12 @@ function wireEvents() {
   els.revealLetterBtn.addEventListener("click", revealLetter);
   els.showHintBtn.addEventListener("click", showHint);
   els.revealAnswerBtn.addEventListener("click", revealAnswer);
+  els.sendAnswerBtn.addEventListener("click", sendAnswer);
+  els.presenterStage.addEventListener("click", (event) => {
+    if (event.target.closest("#sendAnswerStageBtn")) {
+      sendAnswer();
+    }
+  });
   els.resetSolveBtn.addEventListener("click", resetSolve);
   els.closePresenterBtn.addEventListener("click", closePresenter);
   els.fullscreenBtn.addEventListener("click", () => {
