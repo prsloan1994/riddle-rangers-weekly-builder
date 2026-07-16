@@ -370,6 +370,33 @@ function switchWeek(index) {
   renderAll();
 }
 
+function directRiddleUrl(weekIndex, riddleIndex) {
+  const url = new URL(window.location.href);
+  url.search = "";
+  url.hash = "";
+  url.searchParams.set("present", "1");
+  url.searchParams.set("week", String(weekIndex + 1));
+  url.searchParams.set("riddle", String(riddleIndex + 1));
+  return url.toString();
+}
+
+async function copyRiddleLink(button, weekIndex, riddleIndex) {
+  const link = directRiddleUrl(weekIndex, riddleIndex);
+  const originalText = button.textContent;
+
+  try {
+    await navigator.clipboard.writeText(link);
+    button.textContent = "Copied";
+  } catch {
+    window.prompt("Copy this riddle link:", link);
+    button.textContent = "Link";
+  }
+
+  window.setTimeout(() => {
+    button.textContent = originalText;
+  }, 1800);
+}
+
 function updateTypeControls() {
   const type = els.typeInput.value;
   els.fallenSettings.classList.toggle("hidden", type !== "fallen-letters");
@@ -459,6 +486,9 @@ function renderList() {
       resetForm(riddle);
     });
     card.querySelector(".present-one").addEventListener("click", () => openPresenter(index));
+    card.querySelector(".link-one").addEventListener("click", (event) => {
+      copyRiddleLink(event.currentTarget, program.activeWeekIndex, index);
+    });
     card.querySelector(".edit-one").addEventListener("click", () => resetForm(riddle));
     card.querySelector(".copy-one").addEventListener("click", () => {
       week.riddles.splice(index + 1, 0, { ...riddle, id: crypto.randomUUID(), title: `${riddle.title} Copy` });
@@ -956,6 +986,31 @@ function nextRiddle(delta) {
   renderPresenter();
 }
 
+function openPresenterFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("present") !== "1") {
+    return;
+  }
+
+  const weekIndex = clamp(Number(params.get("week")) - 1 || 0, 0, program.weeks.length - 1);
+  const targetWeek = program.weeks[weekIndex];
+  if (!targetWeek?.riddles.length) {
+    return;
+  }
+
+  const riddleIndex = clamp(Number(params.get("riddle")) - 1 || 0, 0, targetWeek.riddles.length - 1);
+  program.activeWeekIndex = weekIndex;
+  week = currentWeek();
+  editingId = null;
+  activeRiddleIndex = riddleIndex;
+  activeStep = 0;
+  solveStates = {};
+  saveProgram();
+  resetForm(week.riddles[riddleIndex]);
+  renderAll();
+  openPresenter(riddleIndex);
+}
+
 function exportWeek() {
   saveWeek();
   const blob = new Blob([JSON.stringify(program, null, 2)], { type: "application/json" });
@@ -1108,3 +1163,4 @@ wireEvents();
 syncWeekFields();
 resetForm(week.riddles[0]);
 renderAll();
+openPresenterFromUrl();
